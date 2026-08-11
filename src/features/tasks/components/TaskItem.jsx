@@ -20,8 +20,9 @@ function TaskItem({ task }) {
             <input 
               type="checkbox" 
               checked={task.isCompleted} 
-              readOnly 
+              onChange={() => toggleTask(task.id)}
               className="cursor-pointer"
+              aria-label={`Mark task ${task.id} as completed`}
               data-testid={`task-checkbox-${task.id}`}
             />
             <CheckIcon className="checkmark h-3 w-3 text-white cursor-pointer" />
@@ -58,9 +59,9 @@ function TaskItem({ task }) {
       {/* Display tags if they exist */}
       {task.tags && task.tags.length > 0 && (
         <div className="mt-2 flex flex-wrap gap-1" data-testid={`task-tags-${task.id}`}>
-          {task.tags.map((tag, index) => (
+          {task.tags.map((tag) => (
             <div 
-              key={index} 
+              key={tag} 
               className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800"
             >
               <TagIcon className="h-3 w-3 mr-1" />
