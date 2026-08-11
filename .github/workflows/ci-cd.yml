@@ -21,9 +21,9 @@ jobs:
       uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
     
     - name: Setup Node.js
-    uses: actions/setup-node@v3
+      uses: actions/setup-node@v3
       with:
-      node-version: '18'
+        node-version: '18'
         cache: 'npm'
     
     - name: Install dependencies
