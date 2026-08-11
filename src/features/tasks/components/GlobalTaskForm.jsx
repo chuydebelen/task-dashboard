@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { CheckIcon, XMarkIcon, TagIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { useTaskContext } from '../../../context/TaskContext';
@@ -61,15 +61,14 @@ function GlobalTaskForm({ onCancel }) {
   };
 
   // Get matching tags based on the current input
-  const getMatchingTags = () => {
+  const matchingTags = useMemo(() => {
     if (!newTagInput.trim()) return [];
-    
     const inputLower = newTagInput.toLowerCase();
-    return tags.filter(tag => 
-      !selectedTags.includes(tag) && 
+    return tags.filter(tag =>
+      !selectedTags.includes(tag) &&
       tag.toLowerCase().includes(inputLower)
     );
-  };
+  }, [newTagInput, tags, selectedTags]);
 
   return (
     <form className="global-task-form mb-6" onSubmit={handleSubmit} data-testid="global-task-form">
@@ -141,11 +140,11 @@ function GlobalTaskForm({ onCancel }) {
         </div>
         
         {/* Matching tag suggestions - only shown when input matches existing tags */}
-        {getMatchingTags().length > 0 && (
+        {matchingTags.length > 0 && (
           <div className="mt-2" data-testid="tag-suggestions">
             <p className="text-xs font-medium text-neutral-500 mb-1.5">Select matching tag:</p>
             <div className="flex flex-wrap gap-2">
-              {getMatchingTags().map((tag, index) => (
+              {matchingTags.map((tag, index) => (
                 <button
                   key={index}
                   type="button"

@@ -28,9 +28,10 @@ export const TaskProvider = ({ children }) => {
   }, [tasks]);
 
   const addTask = (task) => {
-    const id = Math.floor(Math.random() * 10000) + 1;
+    // Use a timestamp-based id to reduce collisions across quick additions
+    const id = `${Date.now()}-${Math.floor(Math.random() * 10000)}`;
     const newTask = { id, ...task };
-    setTasks([...tasks, newTask]);
+    setTasks(prev => [...prev, newTask]);
     return newTask;
   };
 
